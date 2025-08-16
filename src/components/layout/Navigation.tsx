@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { LanguageToggle } from "@/components/ui/language-toggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Shield, MapPin, AlertTriangle, Settings, Home } from "lucide-react";
 
 export const Navigation = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const { t } = useLanguage();
 
   const navItems = [
-    { id: "dashboard", icon: Home, label: "Dashboard" },
-    { id: "map", icon: MapPin, label: "Safety Map" },
-    { id: "incidents", icon: AlertTriangle, label: "Report" },
-    { id: "admin", icon: Settings, label: "Admin" },
+    { id: "dashboard", icon: Home, label: t("nav.dashboard") },
+    { id: "map", icon: MapPin, label: t("nav.map") },
+    { id: "incidents", icon: AlertTriangle, label: t("nav.incidents") },
+    { id: "admin", icon: Settings, label: t("nav.admin") },
   ];
 
   return (
@@ -21,12 +24,14 @@ export const Navigation = () => {
             <Shield className="h-6 w-6 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-lg font-bold">Geo-Safe-Chain</h1>
-            <p className="text-xs text-muted-foreground">Tourist Safety Platform</p>
+            <h1 className="text-lg font-bold">{t("app.title")}</h1>
+            <p className="text-xs text-muted-foreground">{t("app.subtitle")}</p>
           </div>
         </div>
         
-        <nav className="flex gap-1">
+        <div className="flex items-center gap-2">
+          <LanguageToggle />
+          <nav className="flex gap-1">
           {navItems.map((item) => (
             <Button
               key={item.id}
@@ -39,7 +44,8 @@ export const Navigation = () => {
               <span className="text-xs">{item.label}</span>
             </Button>
           ))}
-        </nav>
+          </nav>
+        </div>
       </div>
     </Card>
   );

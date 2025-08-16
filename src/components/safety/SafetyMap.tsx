@@ -42,7 +42,11 @@ const mockZones: Zone[] = [
   }
 ];
 
-export const SafetyMap = () => {
+interface SafetyMapProps {
+  locationPulse?: boolean;
+}
+
+export const SafetyMap = ({ locationPulse = false }: SafetyMapProps) => {
   const getZoneColor = (type: "safe" | "caution" | "restricted") => {
     switch (type) {
       case "safe": return "bg-safe/20 border-safe";
