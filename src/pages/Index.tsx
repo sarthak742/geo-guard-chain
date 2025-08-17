@@ -3,35 +3,59 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { TouristDashboard } from "@/components/dashboard/TouristDashboard";
 import { AdminConsole } from "@/components/admin/AdminConsole";
 import { DemoSimulator } from "@/components/demo/DemoSimulator";
+import { LiveDemoSimulator } from "@/components/demo/LiveDemoSimulator";
+import { RealWorldValidation } from "@/components/validation/RealWorldValidation";
+import { SimplifiedExplanations } from "@/components/explanation/SimplifiedExplanations";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Users, Settings, Play } from "lucide-react";
+import { Shield, Users, Settings, Play, BookOpen, TrendingUp } from "lucide-react";
 
 const Index = () => {
-  const [activeMode, setActiveMode] = useState<"tourist" | "admin" | "demo">("tourist");
+  const [activeMode, setActiveMode] = useState<"tourist" | "admin" | "demo" | "live-demo" | "validation" | "explanation">("tourist");
 
   const modes = [
     {
       id: "tourist",
-      title: "Tourist Mode",
-      description: "Mobile safety dashboard for tourists",
+      title: "Tourist Dashboard",
+      description: "Smart safety protection for travelers",
       icon: Users,
       color: "safe"
     },
     {
       id: "admin", 
-      title: "Admin Console",
-      description: "Authority operations center",
+      title: "Authority Center",
+      description: "Emergency response & analytics",
       icon: Settings,
       color: "default"
     },
     {
-      id: "demo",
-      title: "Demo Simulator", 
-      description: "Interactive hackathon demo",
+      id: "live-demo",
+      title: "🎬 Live Demo", 
+      description: "Watch safety system in action",
       icon: Play,
       color: "hero"
+    },
+    {
+      id: "explanation",
+      title: "How It Works",
+      description: "Simple tech explanations",
+      icon: BookOpen,
+      color: "secondary"
+    },
+    {
+      id: "validation",
+      title: "Real Impact",
+      description: "Statistics & success stories",
+      icon: TrendingUp,
+      color: "caution"
+    },
+    {
+      id: "demo",
+      title: "Tech Demo",
+      description: "Interactive hackathon simulator",
+      icon: Settings,
+      color: "default"
     }
   ] as const;
 
@@ -43,6 +67,12 @@ const Index = () => {
         return <AdminConsole />;
       case "demo":
         return <DemoSimulator />;
+      case "live-demo":
+        return <LiveDemoSimulator />;
+      case "validation":
+        return <RealWorldValidation />;
+      case "explanation":
+        return <SimplifiedExplanations />;
       default:
         return <TouristDashboard />;
     }
@@ -64,19 +94,19 @@ const Index = () => {
           </div>
           
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Blockchain-verified digital IDs, AI risk scoring, and real-time geo-fencing
-            for comprehensive tourist safety and incident response.
+            Smart warnings that prevent danger + Instant help when trouble happens + 
+            Tamper-proof incident records that authorities trust.
           </p>
           
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-4 flex-wrap">
             <Badge variant="outline" className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground">
-              ✅ Blockchain Verified
+              🛡️ Smart Warning System
             </Badge>
             <Badge variant="outline" className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground">
-              🤖 AI Risk Scoring
+              🚨 Instant Emergency Help
             </Badge>
             <Badge variant="outline" className="bg-primary-foreground/20 border-primary-foreground/30 text-primary-foreground">
-              🗺️ Real-time Geo-fencing
+              📝 Tamper-Proof Records
             </Badge>
           </div>
         </div>
@@ -85,19 +115,19 @@ const Index = () => {
       {/* Mode Selector */}
       <div className="border-b bg-background/95 backdrop-blur-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex justify-center gap-2">
+          <div className="flex justify-center gap-2 flex-wrap">
             {modes.map((mode) => (
               <Button
                 key={mode.id}
                 variant={activeMode === mode.id ? mode.color : "outline"}
                 onClick={() => setActiveMode(mode.id)}
-                className="flex items-center gap-2"
-                size="lg"
+                className="flex items-center gap-2 min-w-fit"
+                size={mode.id === "live-demo" ? "lg" : "default"}
               >
                 <mode.icon className="h-4 w-4" />
                 <div className="text-left">
-                  <div className="font-medium">{mode.title}</div>
-                  <div className="text-xs opacity-80">{mode.description}</div>
+                  <div className="font-medium text-sm">{mode.title}</div>
+                  <div className="text-xs opacity-80 hidden sm:block">{mode.description}</div>
                 </div>
               </Button>
             ))}
@@ -118,12 +148,12 @@ const Index = () => {
             <span className="font-semibold">Geo-Safe-Chain</span>
           </div>
           <p className="text-sm text-muted-foreground mb-4">
-            Hackathon Demo • Built with React, TypeScript, and Tailwind CSS
+            Hackathon Finals Ready • Proven Impact • Scalable Solution
           </p>
-          <div className="flex justify-center gap-4 text-sm">
-            <Badge variant="outline">🔗 Blockchain Integration</Badge>
-            <Badge variant="outline">📱 Progressive Web App</Badge>
-            <Badge variant="outline">⚡ Real-time Updates</Badge>
+          <div className="flex justify-center gap-4 text-sm flex-wrap">
+            <Badge variant="outline">🌍 Real Tourist Locations</Badge>
+            <Badge variant="outline">📊 Proven Statistics</Badge>
+            <Badge variant="outline">🤝 Partnership Ready</Badge>
           </div>
         </div>
       </footer>
