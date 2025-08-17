@@ -3,11 +3,11 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLe
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from "recharts";
 
 const incidentsByLocation = [
-  { location: "Times Square", count: 12, fill: "hsl(var(--restricted))" },
-  { location: "Central Park", count: 8, fill: "hsl(var(--caution))" },
-  { location: "Brooklyn Bridge", count: 5, fill: "hsl(var(--safe))" },
-  { location: "High Line", count: 3, fill: "hsl(var(--primary))" },
-  { location: "Wall Street", count: 7, fill: "hsl(var(--secondary))" },
+  { location: "Taj Mahal Area", count: 12, fill: "hsl(var(--restricted))" },
+  { location: "Gateway of India", count: 8, fill: "hsl(var(--caution))" },
+  { location: "Goa Beaches", count: 5, fill: "hsl(var(--safe))" },
+  { location: "Red Fort Delhi", count: 15, fill: "hsl(var(--primary))" },
+  { location: "Marina Beach", count: 7, fill: "hsl(var(--secondary))" },
 ];
 
 const incidentsByTime = [
@@ -39,19 +39,27 @@ const chartConfig = {
 
 export const AnalyticsDashboard = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Analytics Dashboard</h2>
+        <h2 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+          Analytics Dashboard
+        </h2>
         <div className="flex gap-2">
-          <span className="text-sm bg-safe/20 text-safe px-2 py-1 rounded-full">24h Period</span>
-          <span className="text-sm bg-primary/20 text-primary px-2 py-1 rounded-full">Live Data</span>
+          <span className="text-sm bg-safe/20 text-safe px-3 py-1 rounded-full animate-pulse">
+            🔴 Live Data
+          </span>
+          <span className="text-sm bg-primary/20 text-primary px-3 py-1 rounded-full">
+            📊 24h Period
+          </span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Incidents by Location */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Incidents by Location</h3>
+        <Card className="p-6 hover:shadow-lg transition-all duration-200 group">
+          <h3 className="text-lg font-semibold mb-4 group-hover:text-primary transition-colors">
+            🗺️ Incidents by Tourist Location
+          </h3>
           <ChartContainer config={chartConfig} className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={incidentsByLocation}>
@@ -71,8 +79,10 @@ export const AnalyticsDashboard = () => {
         </Card>
 
         {/* Incidents by Severity */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Incidents by Severity</h3>
+        <Card className="p-6 hover:shadow-lg transition-all duration-200 group">
+          <h3 className="text-lg font-semibold mb-4 group-hover:text-primary transition-colors">
+            ⚠️ Risk Severity Distribution
+          </h3>
           <ChartContainer config={chartConfig} className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -96,8 +106,10 @@ export const AnalyticsDashboard = () => {
         </Card>
 
         {/* Incidents by Time */}
-        <Card className="p-6 lg:col-span-2">
-          <h3 className="text-lg font-semibold mb-4">Incidents by Time (24h Pattern)</h3>
+        <Card className="p-6 lg:col-span-2 hover:shadow-lg transition-all duration-200 group">
+          <h3 className="text-lg font-semibold mb-4 group-hover:text-primary transition-colors">
+            🕐 Tourist Activity & Incident Pattern (24h)
+          </h3>
           <ChartContainer config={chartConfig} className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={incidentsByTime}>
@@ -128,11 +140,11 @@ export const AnalyticsDashboard = () => {
           </div>
           <div className="space-y-1">
             <p className="text-sm font-medium">Hotspot Alert</p>
-            <p className="text-xs text-muted-foreground">Times Square requires increased patrol</p>
+            <p className="text-xs text-muted-foreground">Red Fort Delhi requires increased patrol</p>
           </div>
           <div className="space-y-1">
             <p className="text-sm font-medium">Trend Analysis</p>
-            <p className="text-xs text-muted-foreground">+15% incidents vs last week</p>
+            <p className="text-xs text-muted-foreground">+12% incidents vs last week in tourist areas</p>
           </div>
         </div>
       </Card>

@@ -12,32 +12,32 @@ interface Zone {
 const mockZones: Zone[] = [
   {
     id: "1",
-    name: "Tourist District",
+    name: "Taj Mahal Area",
     type: "safe",
     coordinates: [
-      { lat: 40.7589, lng: -73.9851 },
-      { lat: 40.7614, lng: -73.9776 },
-      { lat: 40.7505, lng: -73.9934 },
+      { lat: 27.1751, lng: 78.0421 },
+      { lat: 27.1760, lng: 78.0450 },
+      { lat: 27.1740, lng: 78.0400 },
     ]
   },
   {
     id: "2", 
-    name: "Construction Area",
+    name: "Construction Zone",
     type: "caution",
     coordinates: [
-      { lat: 40.7505, lng: -73.9934 },
-      { lat: 40.7489, lng: -73.9857 },
-      { lat: 40.7456, lng: -73.9903 },
+      { lat: 27.1720, lng: 78.0380 },
+      { lat: 27.1710, lng: 78.0390 },
+      { lat: 27.1700, lng: 78.0370 },
     ]
   },
   {
     id: "3",
-    name: "High Crime Area",
+    name: "Restricted Area",
     type: "restricted", 
     coordinates: [
-      { lat: 40.7456, lng: -73.9903 },
-      { lat: 40.7423, lng: -73.9825 },
-      { lat: 40.7398, lng: -73.9876 },
+      { lat: 27.1680, lng: 78.0360 },
+      { lat: 27.1670, lng: 78.0340 },
+      { lat: 27.1660, lng: 78.0350 },
     ]
   }
 ];
@@ -98,12 +98,19 @@ export const SafetyMap = ({ locationPulse = false }: SafetyMapProps) => {
           </div>
         ))}
         
-        {/* User Location */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        
+        {/* User Location - Enhanced with better positioning for Indian location */}
+        <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div className="relative">
-            <div className="w-4 h-4 bg-primary rounded-full border-2 border-background shadow-lg animate-pulse"></div>
-            <div className="absolute -top-1 -left-1 w-6 h-6 bg-primary/30 rounded-full animate-ping"></div>
-            <MapPin className="absolute -top-8 -left-3 h-6 w-6 text-primary" />
+            <div className={`w-4 h-4 rounded-full border-2 border-background shadow-lg transition-all duration-300 ${
+              locationPulse ? 'bg-destructive animate-pulse' : 'bg-primary'
+            }`}></div>
+            {locationPulse && (
+              <div className="absolute -top-1 -left-1 w-6 h-6 bg-destructive/50 rounded-full animate-ping"></div>
+            )}
+            <MapPin className={`absolute -top-8 -left-3 h-6 w-6 transition-colors duration-300 ${
+              locationPulse ? 'text-destructive' : 'text-primary'
+            }`} />
           </div>
         </div>
       </div>

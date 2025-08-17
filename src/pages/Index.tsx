@@ -58,8 +58,8 @@ const Index = () => {
               <Shield className="h-12 w-12" />
             </div>
             <div className="text-left">
-              <h1 className="text-4xl font-bold">Geo-Safe-Chain</h1>
-              <p className="text-lg opacity-90">AI-Powered Tourist Safety Platform</p>
+              <h1 className="text-4xl font-bold animate-fade-in">Geo-Safe-Chain</h1>
+              <p className="text-lg opacity-90 animate-fade-in">AI-Powered Tourist Safety Platform</p>
             </div>
           </div>
           
