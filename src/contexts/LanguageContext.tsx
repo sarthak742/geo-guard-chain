@@ -154,8 +154,10 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     return translations[language][key as keyof typeof translations[typeof language]] || key;
   };
 
+  const value = { language, setLanguage, t };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

@@ -16,7 +16,16 @@ export const TouristDashboard = () => {
   const [sosActive, setSosActive] = useState(false);
   const [locationPulse, setLocationPulse] = useState(false);
   const { toast } = useToast();
-  const { t } = useLanguage();
+  
+  // Temporary fallback to debug the context issue
+  let t;
+  try {
+    const langContext = useLanguage();
+    t = langContext.t;
+  } catch (error) {
+    console.error("Language context error:", error);
+    t = (key: string) => key; // Fallback function
+  }
   const { isOnline, simulateOfflineAlert } = useOfflineMode();
 
   const handleSOS = () => {
