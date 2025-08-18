@@ -4,77 +4,79 @@ import { TouristDashboard } from "@/components/dashboard/TouristDashboard";
 import { AdminConsole } from "@/components/admin/AdminConsole";
 import { DemoSimulator } from "@/components/demo/DemoSimulator";
 import { LiveDemoSimulator } from "@/components/demo/LiveDemoSimulator";
+import { TouristLiveDemo } from "@/components/demo/TouristLiveDemo";
+import { TechDemo } from "@/components/demo/TechDemo";
 import { RealWorldValidation } from "@/components/validation/RealWorldValidation";
 import { SimplifiedExplanations } from "@/components/explanation/SimplifiedExplanations";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Users, Settings, Play, BookOpen, TrendingUp } from "lucide-react";
+import { Shield, Users, Settings, Play, BookOpen, TrendingUp, Code2, Monitor } from "lucide-react";
 
 const Index = () => {
-  const [activeMode, setActiveMode] = useState<"tourist" | "admin" | "demo" | "live-demo" | "validation" | "explanation">("tourist");
+  const [activeMode, setActiveMode] = useState<"tourist" | "admin" | "tourist-demo" | "tech-demo" | "validation" | "explanation">("tourist-demo");
 
   const modes = [
     {
-      id: "tourist",
-      title: "Tourist Dashboard",
-      description: "Smart safety protection for travelers",
+      id: "tourist-demo",
+      title: "🇮🇳 Live Tourist Demo", 
+      description: "Tourist-friendly safety experience",
       icon: Users,
       color: "safe"
     },
     {
-      id: "admin", 
-      title: "Authority Center",
-      description: "Emergency response & analytics",
-      icon: Settings,
-      color: "default"
-    },
-    {
-      id: "live-demo",
-      title: "🎬 Live Demo", 
-      description: "Watch safety system in action",
-      icon: Play,
-      color: "hero"
+      id: "tech-demo",
+      title: "🔧 Tech Deep-Dive", 
+      description: "Blockchain & analytics dashboard",
+      icon: Code2,
+      color: "secondary"
     },
     {
       id: "explanation",
       title: "How It Works",
       description: "Simple tech explanations",
       icon: BookOpen,
-      color: "secondary"
+      color: "hero"
     },
     {
       id: "validation",
       title: "Real Impact",
       description: "Statistics & success stories",
       icon: TrendingUp,
-      color: "caution"
+      color: "default"
     },
     {
-      id: "demo",
-      title: "Tech Demo",
-      description: "Interactive hackathon simulator",
+      id: "tourist",
+      title: "Dashboard",
+      description: "Main tourist interface",
+      icon: Monitor,
+      color: "outline"
+    },
+    {
+      id: "admin", 
+      title: "Admin",
+      description: "Authority center",
       icon: Settings,
-      color: "default"
+      color: "outline"
     }
   ] as const;
 
   const renderContent = () => {
     switch (activeMode) {
-      case "tourist":
-        return <TouristDashboard />;
-      case "admin":
-        return <AdminConsole />;
-      case "demo":
-        return <DemoSimulator />;
-      case "live-demo":
-        return <LiveDemoSimulator />;
+      case "tourist-demo":
+        return <TouristLiveDemo />;
+      case "tech-demo":
+        return <TechDemo />;
       case "validation":
         return <RealWorldValidation />;
       case "explanation":
         return <SimplifiedExplanations />;
-      default:
+      case "tourist":
         return <TouristDashboard />;
+      case "admin":
+        return <AdminConsole />;
+      default:
+        return <TouristLiveDemo />;
     }
   };
 
@@ -122,7 +124,7 @@ const Index = () => {
                 variant={activeMode === mode.id ? mode.color : "outline"}
                 onClick={() => setActiveMode(mode.id)}
                 className="flex items-center gap-2 min-w-fit"
-                size={mode.id === "live-demo" ? "lg" : "default"}
+                size={mode.id === "tourist-demo" || mode.id === "tech-demo" ? "lg" : "default"}
               >
                 <mode.icon className="h-4 w-4" />
                 <div className="text-left">
