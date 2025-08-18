@@ -19,6 +19,7 @@ import {
   Activity
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { LeafletMap } from "@/components/maps/LeafletMap";
 
 interface IncidentLog {
   id: string;
@@ -186,50 +187,76 @@ export const TechDemo = () => {
         </TabsList>
 
         <TabsContent value="incidents" className="space-y-4">
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Real-Time Incident Database</h3>
-              <Badge variant="outline" className="bg-primary/10">
-                <Activity className="h-3 w-3 mr-1" />
-                Live Feed
-              </Badge>
-            </div>
-            
-            <div className="space-y-3">
-              {mockIncidents.map((incident) => {
-                const IconComponent = getIncidentIcon(incident.type);
-                return (
-                  <div key={incident.id} className="flex items-center gap-4 p-4 border rounded-lg">
-                    <div className={`p-2 rounded-lg ${getIncidentColor(incident.type)}`}>
-                      <IconComponent className="h-4 w-4" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Incident Map */}
+            <Card className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Live Incident Map</h3>
+                <Badge variant="outline" className="bg-primary/10">
+                  <MapPin className="h-3 w-3 mr-1" />
+                  Real-time
+                </Badge>
+              </div>
+              <LeafletMap
+                center={[20.5937, 78.9629]}
+                zoom={5}
+                markers={mockIncidents.map(incident => ({
+                  id: incident.id,
+                  position: incident.location === "Taj Mahal, Gate 2" ? [27.1751, 78.0421] : 
+                          incident.location === "Gateway of India" ? [18.9220, 72.8347] :
+                          [15.3350, 76.4600], // Hampi
+                  title: `${incident.id} - ${incident.type}`,
+                  type: "incident" as const
+                }))}
+                height="300px"
+                className="rounded-lg"
+              />
+            </Card>
+
+            {/* Incident Logs */}
+            <Card className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Real-Time Incident Database</h3>
+                <Badge variant="outline" className="bg-primary/10">
+                  <Activity className="h-3 w-3 mr-1" />
+                  Live Feed
+                </Badge>
+              </div>
+              
+              <div className="space-y-3 max-h-80 overflow-y-auto">
+                {mockIncidents.map((incident) => {
+                  const IconComponent = getIncidentIcon(incident.type);
+                  return (
+                    <div key={incident.id} className="flex items-center gap-4 p-4 border rounded-lg">
+                      <div className={`p-2 rounded-lg ${getIncidentColor(incident.type)}`}>
+                        <IconComponent className="h-4 w-4" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="grid grid-cols-1 gap-1">
+                          <div className="flex justify-between items-center">
+                            <span className="font-mono text-sm">{incident.id}</span>
+                            <Badge variant={incident.status === "resolved" ? "secondary" : "destructive"} className="text-xs">
+                              {incident.status}
+                            </Badge>
+                          </div>
+                          <div>
+                            <span className="font-medium text-sm">{incident.location}</span>
+                            <p className="text-xs text-muted-foreground capitalize">{incident.type} incident</p>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="font-mono text-xs bg-muted px-2 py-1 rounded">
+                              {incident.txHash.slice(0, 12)}...
+                            </span>
+                            <span className="text-xs text-muted-foreground">{incident.response_time}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-2">
-                      <div>
-                        <span className="font-mono text-sm">{incident.id}</span>
-                        <p className="text-xs text-muted-foreground">{incident.timestamp}</p>
-                      </div>
-                      <div>
-                        <span className="font-medium">{incident.location}</span>
-                        <p className="text-xs capitalize">{incident.type} incident</p>
-                      </div>
-                      <div>
-                        <span className="font-mono text-xs bg-muted px-2 py-1 rounded">
-                          {incident.txHash.slice(0, 12)}...
-                        </span>
-                        <p className="text-xs text-muted-foreground">Blockchain hash</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge variant={incident.status === "resolved" ? "secondary" : "destructive"}>
-                          {incident.status}
-                        </Badge>
-                        <span className="text-xs">{incident.response_time}</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
+                  );
+                })}
+              </div>
+            </Card>
+          </div>
         </TabsContent>
 
         <TabsContent value="blockchain" className="space-y-4">

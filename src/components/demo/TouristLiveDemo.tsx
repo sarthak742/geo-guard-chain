@@ -5,22 +5,40 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { MapPin, AlertTriangle, Shield, Phone, Users, CheckCircle, Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { LeafletMap } from "@/components/maps/LeafletMap";
 
 interface TouristLocation {
   id: string;
   name: string;
-  coordinates: { x: number; y: number };
+  coordinates: [number, number];
   type: "safe" | "caution" | "restricted";
   description: string;
 }
 
 const touristLocations: TouristLocation[] = [
-  { id: "taj", name: "Taj Mahal", coordinates: { x: 60, y: 45 }, type: "caution", description: "High pickpocket risk area" },
-  { id: "red-fort", name: "Red Fort", coordinates: { x: 55, y: 35 }, type: "safe", description: "Well-monitored tourist zone" },
-  { id: "gateway", name: "Gateway of India", coordinates: { x: 45, y: 70 }, type: "caution", description: "Crowded area - stay alert" },
-  { id: "goa", name: "Goa Beaches", coordinates: { x: 35, y: 75 }, type: "safe", description: "Tourist-friendly beaches" },
-  { id: "hampi", name: "Hampi Ruins", coordinates: { x: 40, y: 80 }, type: "restricted", description: "After-hours danger zone" },
-  { id: "jaipur", name: "Jaipur Palace", coordinates: { x: 50, y: 40 }, type: "safe", description: "Secure heritage site" }
+  { id: "taj", name: "Taj Mahal", coordinates: [27.1751, 78.0421], type: "caution", description: "High pickpocket risk area" },
+  { id: "red-fort", name: "Red Fort", coordinates: [28.6562, 77.2410], type: "safe", description: "Well-monitored tourist zone" },
+  { id: "gateway", name: "Gateway of India", coordinates: [18.9220, 72.8347], type: "caution", description: "Crowded area - stay alert" },
+  { id: "goa", name: "Goa Beaches", coordinates: [15.2993, 74.1240], type: "safe", description: "Tourist-friendly beaches" },
+  { id: "hampi", name: "Hampi Ruins", coordinates: [15.3350, 76.4600], type: "restricted", description: "After-hours danger zone" },
+  { id: "jaipur", name: "Jaipur Palace", coordinates: [26.9124, 75.7873], type: "safe", description: "Secure heritage site" }
+];
+
+// Define danger zones for the demo
+const dangerZones = [
+  {
+    id: "danger-taj",
+    name: "High Risk Area",
+    type: "restricted" as const,
+    description: "Pickpocket activity detected",
+    coordinates: [
+      [27.1745, 78.0415],
+      [27.1755, 78.0415],
+      [27.1755, 78.0425],
+      [27.1745, 78.0425],
+      [27.1745, 78.0415]
+    ] as [number, number][]
+  }
 ];
 
 const demoSteps = [
@@ -36,7 +54,7 @@ export const TouristLiveDemo = () => {
   const [progress, setProgress] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [showDangerAlert, setShowDangerAlert] = useState(false);
-  const [touristPosition, setTouristPosition] = useState({ x: 65, y: 50 });
+  const [touristPosition, setTouristPosition] = useState<[number, number]>([27.1760, 78.0430]);
   const { toast } = useToast();
 
   const startDemo = async () => {
@@ -51,7 +69,7 @@ export const TouristLiveDemo = () => {
       
       // Special effects for specific steps
       if (i === 1) {
-        setTouristPosition({ x: 60, y: 45 }); // Move to Taj Mahal
+        setTouristPosition([27.1751, 78.0421]); // Move to Taj Mahal
       }
       
       if (i === 2) {
@@ -88,6 +106,36 @@ export const TouristLiveDemo = () => {
       default: return "bg-muted";
     }
   };
+
+  const handleZoneEnter = (zone: any) => {
+    if (zone.type === "restricted") {
+      setShowDangerAlert(true);
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200]);
+      }
+      toast({
+        title: "🚨 Danger Zone Alert!",
+        description: `${zone.description}`,
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Create markers for the map
+  const mapMarkers = [
+    {
+      id: "tourist",
+      position: touristPosition,
+      title: "Your Location",
+      type: "tourist" as const
+    },
+    ...touristLocations.map(location => ({
+      id: location.id,
+      position: location.coordinates,
+      title: location.name,
+      type: "location" as const
+    }))
+  ];
 
   return (
     <div className="space-y-6">
@@ -148,39 +196,22 @@ export const TouristLiveDemo = () => {
             </Badge>
           </div>
 
-          {/* Mock India Map */}
-          <div className="relative bg-gradient-to-br from-primary/5 to-safe/5 rounded-lg h-96 border-2 border-dashed border-muted overflow-hidden">
-            {/* Background pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="grid grid-cols-10 grid-rows-8 h-full">
-                {Array.from({ length: 80 }).map((_, i) => (
-                  <div key={i} className="border border-muted" />
-                ))}
-              </div>
-            </div>
-
-            {/* Tourist Locations */}
-            {touristLocations.map((location) => (
-              <div
-                key={location.id}
-                className={`absolute w-4 h-4 rounded-full ${getLocationColor(location.type)} border-2 border-white shadow-lg transform -translate-x-2 -translate-y-2 animate-pulse-glow`}
-                style={{ left: `${location.coordinates.x}%`, top: `${location.coordinates.y}%` }}
-                title={location.name}
-              />
-            ))}
-
-            {/* Tourist Position */}
-            <div
-              className="absolute w-6 h-6 bg-primary rounded-full border-4 border-white shadow-lg transform -translate-x-3 -translate-y-3 z-10"
-              style={{ left: `${touristPosition.x}%`, top: `${touristPosition.y}%` }}
-            >
-              <Users className="h-4 w-4 text-white absolute -translate-x-2 -translate-y-2" />
-            </div>
-
+          {/* Interactive India Map */}
+          <div className="relative">
+            <LeafletMap
+              center={[20.5937, 78.9629]} // Center of India
+              zoom={5}
+              zones={showDangerAlert ? dangerZones : []}
+              markers={mapMarkers}
+              onZoneEnter={handleZoneEnter}
+              height="400px"
+              className="rounded-lg"
+            />
+            
             {/* Danger Zone Alert Overlay */}
             {showDangerAlert && (
-              <div className="absolute inset-0 bg-restricted/20 border-4 border-restricted rounded-lg animate-pulse">
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+              <div className="absolute inset-0 bg-restricted/20 border-4 border-restricted rounded-lg animate-pulse pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-auto">
                   <div className="bg-white p-4 rounded-lg shadow-emergency border-2 border-restricted">
                     <AlertTriangle className="h-8 w-8 text-restricted mx-auto mb-2" />
                     <h4 className="font-bold text-restricted">🚨 DANGER ZONE!</h4>
