@@ -24,7 +24,7 @@ const mockIncidents: Incident[] = [
     id: "INC-001",
     type: "theft",
     description: "Phone stolen near subway station",
-    location: "Times Square Station",
+    location: "Police Bazaar, Shillong",
     status: "pending",
     timestamp: "2024-08-16 14:30",
     touristId: "TUR-2024-8391",
@@ -34,7 +34,7 @@ const mockIncidents: Incident[] = [
     id: "INC-002", 
     type: "medical",
     description: "Tourist feeling unwell, needs assistance",
-    location: "Central Park",
+    location: "Cherrapunji Falls",
     status: "dispatched",
     timestamp: "2024-08-16 13:45",
     touristId: "TUR-2024-7523",
@@ -44,11 +44,31 @@ const mockIncidents: Incident[] = [
     id: "INC-003",
     type: "lost",
     description: "Lost tourist, doesn't speak English",
-    location: "Brooklyn Bridge",
+    location: "Dawki River Bridge",
     status: "resolved", 
     timestamp: "2024-08-16 12:15",
     touristId: "TUR-2024-9184",
     priority: "low"
+  },
+  {
+    id: "INC-004",
+    type: "harassment",
+    description: "Tourist reporting harassment",
+    location: "Ward's Lake, Shillong",
+    status: "pending",
+    timestamp: "2024-08-16 11:45",
+    touristId: "TUR-2024-6725",
+    priority: "high"
+  },
+  {
+    id: "INC-005",
+    type: "accident",
+    description: "Minor slip and fall injury",
+    location: "Mawlynnong Village",
+    status: "resolved",
+    timestamp: "2024-08-16 10:20",
+    touristId: "TUR-2024-4892",
+    priority: "medium"
   }
 ];
 
