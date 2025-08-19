@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { MapPin, AlertTriangle, Shield, Phone, Users, CheckCircle, Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { GoaMap } from "@/components/maps/GoaMap";
+import { MeghalayaMap } from "@/components/maps/MeghalayaMap";
 
 interface TouristLocation {
   id: string;
@@ -54,7 +54,7 @@ export const TouristLiveDemo = () => {
   const [progress, setProgress] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [showDangerAlert, setShowDangerAlert] = useState(false);
-  const [touristPosition, setTouristPosition] = useState<[number, number]>([27.1760, 78.0430]);
+  const [touristPosition, setTouristPosition] = useState<[number, number]>([25.5788, 91.8933]); // Shillong
   const { toast } = useToast();
 
   const startDemo = async () => {
@@ -69,7 +69,7 @@ export const TouristLiveDemo = () => {
       
       // Special effects for specific steps
       if (i === 1) {
-        setTouristPosition([27.1751, 78.0421]); // Move to Taj Mahal
+        setTouristPosition([25.2993, 91.7362]); // Move to Cherrapunji
       }
       
       if (i === 2) {
@@ -153,7 +153,7 @@ export const TouristLiveDemo = () => {
           </div>
           <p className="text-xl max-w-2xl mx-auto">
             Explore India's incredible heritage sites with confidence. 
-            <span className="text-safe font-semibold"> Geo-Guard-Chain</span> protects you every step of the way!
+            <span className="text-safe font-semibold"> Geo-Guard-Chain</span> protects you in the hills of Meghalaya!
           </p>
         </div>
       </Card>
@@ -196,13 +196,14 @@ export const TouristLiveDemo = () => {
             </Badge>
           </div>
 
-          {/* Interactive India Map */}
+          {/* Interactive Meghalaya Map */}
           <div className="relative">
-            <GoaMap
-              center={[15.4909, 73.8278]} // Goa coordinates
-              zoom={12}
+            <MeghalayaMap
+              center={[25.4670, 91.3662]} // Meghalaya coordinates
+              zoom={11}
               height="400px"
               className="rounded-lg"
+              userLocation={touristPosition}
             />
             
             {/* Danger Zone Alert Overlay */}

@@ -19,7 +19,7 @@ import {
   Activity
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { GoaMap } from "@/components/maps/GoaMap";
+import { MeghalayaMap } from "@/components/maps/MeghalayaMap";
 
 interface IncidentLog {
   id: string;
@@ -197,11 +197,12 @@ export const TechDemo = () => {
                   Real-time
                 </Badge>
               </div>
-              <GoaMap
-                center={[15.4909, 73.8278]} // Goa coordinates
-                zoom={12}
+              <MeghalayaMap
+                center={[25.4670, 91.3662]} // Meghalaya coordinates
+                zoom={11}
                 height="300px"
                 className="rounded-lg"
+                userLocation={[25.5788, 91.8933]}
               />
             </Card>
 
