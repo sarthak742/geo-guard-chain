@@ -6,7 +6,7 @@ import { DemoSimulator } from "@/components/demo/DemoSimulator";
 import { LiveDemoSimulator } from "@/components/demo/LiveDemoSimulator";
 import { TouristLiveDemo } from "@/components/demo/TouristLiveDemo";
 import { TechDemo } from "@/components/demo/TechDemo";
-import { RealWorldValidation } from "@/components/validation/RealWorldValidation";
+
 import { SimplifiedExplanations } from "@/components/explanation/SimplifiedExplanations";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -14,37 +14,9 @@ import { Badge } from "@/components/ui/badge";
 import { Shield, Users, Settings, Play, BookOpen, TrendingUp, Code2, Monitor } from "lucide-react";
 
 const Index = () => {
-  const [activeMode, setActiveMode] = useState<"tourist" | "admin" | "tourist-demo" | "tech-demo" | "validation" | "explanation">("tourist-demo");
+  const [activeMode, setActiveMode] = useState<"tourist" | "admin" | "tourist-demo" | "tech-demo" | "explanation">("tourist-demo");
 
   const modes = [
-    {
-      id: "tourist-demo",
-      title: "🇮🇳 Live Tourist Demo", 
-      description: "Tourist-friendly safety experience",
-      icon: Users,
-      color: "safe"
-    },
-    {
-      id: "tech-demo",
-      title: "🔧 Tech Deep-Dive", 
-      description: "Blockchain & analytics dashboard",
-      icon: Code2,
-      color: "secondary"
-    },
-    {
-      id: "explanation",
-      title: "How It Works",
-      description: "Simple tech explanations",
-      icon: BookOpen,
-      color: "hero"
-    },
-    {
-      id: "validation",
-      title: "Real Impact",
-      description: "Statistics & success stories",
-      icon: TrendingUp,
-      color: "default"
-    },
     {
       id: "tourist",
       title: "Dashboard",
@@ -58,6 +30,27 @@ const Index = () => {
       description: "Authority center",
       icon: Settings,
       color: "outline"
+    },
+    {
+      id: "explanation",
+      title: "How It Works",
+      description: "Simple tech explanations",
+      icon: BookOpen,
+      color: "hero"
+    },
+    {
+      id: "tourist-demo",
+      title: "🇮🇳 Live Tourist Demo", 
+      description: "Tourist-friendly safety experience",
+      icon: Users,
+      color: "safe"
+    },
+    {
+      id: "tech-demo",
+      title: "🔧 Tech Deep-Dive", 
+      description: "Blockchain & analytics dashboard",
+      icon: Code2,
+      color: "secondary"
     }
   ] as const;
 
@@ -67,8 +60,6 @@ const Index = () => {
         return <TouristLiveDemo />;
       case "tech-demo":
         return <TechDemo />;
-      case "validation":
-        return <RealWorldValidation />;
       case "explanation":
         return <SimplifiedExplanations />;
       case "tourist":

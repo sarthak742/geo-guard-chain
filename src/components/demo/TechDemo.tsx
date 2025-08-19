@@ -19,7 +19,7 @@ import {
   Activity
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { LeafletMap } from "@/components/maps/LeafletMap";
+import { GoaMap } from "@/components/maps/GoaMap";
 
 interface IncidentLog {
   id: string;
@@ -197,17 +197,9 @@ export const TechDemo = () => {
                   Real-time
                 </Badge>
               </div>
-              <LeafletMap
-                center={[20.5937, 78.9629]}
-                zoom={5}
-                markers={mockIncidents.map(incident => ({
-                  id: incident.id,
-                  position: incident.location === "Taj Mahal, Gate 2" ? [27.1751, 78.0421] : 
-                          incident.location === "Gateway of India" ? [18.9220, 72.8347] :
-                          [15.3350, 76.4600], // Hampi
-                  title: `${incident.id} - ${incident.type}`,
-                  type: "incident" as const
-                }))}
+              <GoaMap
+                center={[15.4909, 73.8278]} // Goa coordinates
+                zoom={12}
                 height="300px"
                 className="rounded-lg"
               />

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { MapPin, AlertTriangle, Shield, Phone, Users, CheckCircle, Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { LeafletMap } from "@/components/maps/LeafletMap";
+import { GoaMap } from "@/components/maps/GoaMap";
 
 interface TouristLocation {
   id: string;
@@ -198,12 +198,9 @@ export const TouristLiveDemo = () => {
 
           {/* Interactive India Map */}
           <div className="relative">
-            <LeafletMap
-              center={[20.5937, 78.9629]} // Center of India
-              zoom={5}
-              zones={showDangerAlert ? dangerZones : []}
-              markers={mapMarkers}
-              onZoneEnter={handleZoneEnter}
+            <GoaMap
+              center={[15.4909, 73.8278]} // Goa coordinates
+              zoom={12}
               height="400px"
               className="rounded-lg"
             />
