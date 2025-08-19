@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RiskGauge } from "@/components/safety/RiskGauge";
-import { SafetyMap } from "@/components/safety/SafetyMap";
+import { MeghalayaMap } from "@/components/maps/MeghalayaMap";
 import { IncidentReporter } from "@/components/incidents/IncidentReporter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useOfflineMode } from "@/hooks/useOfflineMode";
@@ -113,9 +113,20 @@ export const TouristDashboard = () => {
           <RiskGauge score={currentRisk} factors={riskFactors} />
         </div>
 
-        {/* Safety Map */}
+        {/* AI-Powered Meghalaya Map */}
         <div className="lg:col-span-2">
-          <SafetyMap locationPulse={locationPulse} />
+          <Card className="p-4">
+            <div className="flex items-center gap-2 mb-4">
+              <MapPin className="h-5 w-5 text-primary" />
+              <h3 className="font-semibold">AI Safety Zones - Meghalaya</h3>
+              <Badge variant="outline" className="ml-auto">Live GPS</Badge>
+            </div>
+            <MeghalayaMap 
+              height="400px"
+              userLocation={[25.5788, 91.8933]} // Shillong coordinates
+              className={locationPulse ? 'animate-pulse' : ''}
+            />
+          </Card>
         </div>
       </div>
 
