@@ -17,7 +17,9 @@ export const UserProfile = () => {
 
   if (!user) return null;
 
-  const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email;
+  const displayName = user.user_metadata?.full_name || user.user_metadata?.name || 'User';
+  // Security: Mask email for privacy (show only first letter + domain)
+  const maskedEmail = user.email ? `${user.email.charAt(0)}***@${user.email.split('@')[1]}` : 'No email';
   const initials = displayName
     ?.split(' ')
     .map((name: string) => name[0])
@@ -40,7 +42,7 @@ export const UserProfile = () => {
         <div className="flex flex-col space-y-1 p-2">
           <p className="text-sm font-medium leading-none">{displayName}</p>
           <p className="text-xs leading-none text-muted-foreground">
-            {user.email}
+            {maskedEmail}
           </p>
         </div>
         <DropdownMenuSeparator />

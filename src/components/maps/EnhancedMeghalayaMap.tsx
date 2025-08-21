@@ -62,7 +62,8 @@ export const EnhancedMeghalayaMap = ({ userLocation, onZoneReport }: EnhancedMeg
     if (!selectedLocation) return;
     
     const [lat, lng] = selectedLocation;
-    await reportZone(lat, lng, zoneType, `Zone reported via map at ${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+    // Security: Use generic description without exact coordinates
+    await reportZone(lat, lng, zoneType, `${zoneType} zone reported via map`);
     
     setShowReportDialog(false);
     setSelectedLocation(null);
@@ -122,7 +123,7 @@ export const EnhancedMeghalayaMap = ({ userLocation, onZoneReport }: EnhancedMeg
                 <div className="text-center">
                   <strong>Your Location</strong>
                   <br />
-                  <small>{userLocation[0].toFixed(6)}, {userLocation[1].toFixed(6)}</small>
+                  <small>Approximate location</small>
                 </div>
               </Popup>
             </Marker>
@@ -157,7 +158,7 @@ export const EnhancedMeghalayaMap = ({ userLocation, onZoneReport }: EnhancedMeg
                       {zone.description || `${zone.zone_type} zone`}
                     </p>
                     <div className="text-xs text-muted-foreground space-y-1">
-                      <p>📍 {zone.latitude.toFixed(6)}, {zone.longitude.toFixed(6)}</p>
+                      <p>📍 Area: {zone.latitude.toFixed(3)}°, {zone.longitude.toFixed(3)}°</p>
                       <p>📅 {new Date(zone.created_at).toLocaleString()}</p>
                       {zone.blockchain_tx_hash && (
                         <div className="flex items-center gap-1">
@@ -187,7 +188,7 @@ export const EnhancedMeghalayaMap = ({ userLocation, onZoneReport }: EnhancedMeg
                 <div className="text-center">
                   <strong>Report Zone</strong>
                   <br />
-                  <small>{selectedLocation[0].toFixed(6)}, {selectedLocation[1].toFixed(6)}</small>
+                  <small>Selected area</small>
                 </div>
               </Popup>
             </Marker>
@@ -206,7 +207,7 @@ export const EnhancedMeghalayaMap = ({ userLocation, onZoneReport }: EnhancedMeg
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-sm text-muted-foreground">
-                  Location: {selectedLocation[0].toFixed(6)}, {selectedLocation[1].toFixed(6)}
+                  Selected area for zone reporting
                 </p>
                 <div className="grid grid-cols-1 gap-2">
                   <Button

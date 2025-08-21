@@ -3,9 +3,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
+// Security: Zone interface excludes sensitive user data for public display
 export interface Zone {
   id: string;
-  user_id: string;
+  // user_id removed for privacy - not needed in frontend display
   latitude: number;
   longitude: number;
   zone_type: 'safe' | 'crowded' | 'avoid';
@@ -15,19 +16,25 @@ export interface Zone {
   updated_at: string;
 }
 
+// Private interface for backend operations only
+interface ZoneWithUser extends Zone {
+  user_id: string;
+}
+
 export const useZones = () => {
   const [zones, setZones] = useState<Zone[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const { toast } = useToast();
 
-  // Fetch zones from database
+  // Fetch zones from database - excluding sensitive user data
   const fetchZones = async () => {
     try {
       setLoading(true);
+      // Security: Only select fields needed for public display, exclude user_id
       const { data, error } = await supabase
         .from('zones')
-        .select('*')
+        .select('id, latitude, longitude, zone_type, description, blockchain_tx_hash, created_at, updated_at')
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -133,18 +140,22 @@ export const useZones = () => {
           console.log('Real-time zone update:', payload);
           
           if (payload.eventType === 'INSERT') {
-            const newZone = payload.new as Zone;
-            setZones(prev => [newZone, ...prev]);
+            const newZone = payload.new as ZoneWithUser;
+            // Security: Remove user_id before adding to public state
+            const { user_id, ...publicZone } = newZone;
+            setZones(prev => [publicZone, ...prev]);
             
             // Show toast for new zones from other users
-            if (newZone.user_id !== user?.id) {
+            if (user_id !== user?.id) {
               toast({
                 title: "New zone reported!",
                 description: `A ${newZone.zone_type} zone was reported nearby.`,
               });
             }
           } else if (payload.eventType === 'UPDATE') {
-            const updatedZone = payload.new as Zone;
+            const updatedZoneWithUser = payload.new as ZoneWithUser;
+            // Security: Remove user_id before updating public state
+            const { user_id, ...updatedZone } = updatedZoneWithUser;
             setZones(prev => prev.map(zone => 
               zone.id === updatedZone.id ? updatedZone : zone
             ));
