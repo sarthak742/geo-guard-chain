@@ -10,6 +10,7 @@ import { VoiceSOS } from "@/components/tourist/VoiceSOS";
 import { AnomalyAlertsPanel } from "@/components/alerts/AnomalyAlertsPanel";
 import { useTranslation } from "react-i18next";
 import { useOfflineMode } from "@/hooks/useOfflineMode";
+import { useTranslateContent } from "@/hooks/useTranslateContent";
 import { AlertTriangle, Phone, MapPin, Clock, QrCode, Users, Wifi, WifiOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
@@ -24,6 +25,25 @@ export const TouristDashboard = () => {
   const { t } = useTranslation();
   const { isOnline, simulateOfflineAlert } = useOfflineMode();
   const { user } = useAuth();
+
+  // Dynamic content for translation
+  const dynamicContent = {
+    welcomeSubtitle: "Your safety is our priority - Smart monitoring with AI",
+    emergencyDescription: "Instant SOS with voice recording and GPS location",
+    offlineTestButton: "Test offline emergency alert system",
+    sosNotifiedMessage: "Emergency services have been notified. Stay calm and wait for help.",
+    stayCalm: "Help is on the way. Your location has been shared securely.",
+    smartGuidanceTitle: "AI-Powered Smart Guidance for Tourists",
+    recommendation: "Visit Taj Mahal gardens - Safe tourist route with verified security",
+    headsUpMessage: "Heavy tourist traffic near main entrance - alternate routes available",
+    lastUpdated: "AI recommendations updated 2 minutes ago",
+    digitalIdDesc: "Show your verified blockchain digital identity",
+    safeRoutesDesc: "Find AI-verified safe paths and tourist routes",
+    emergencyContactsDesc: "Quick access to verified emergency services",
+    reportIssueDesc: "Report incidents with blockchain verification"
+  };
+
+  const { translatedContent, isTranslating } = useTranslateContent(dynamicContent);
 
   // Set up anomaly detection with mock planned zones
   useState(() => {
@@ -89,6 +109,9 @@ export const TouristDashboard = () => {
           {t("tourist.welcome")}, Priya Sharma
         </h1>
         <p className="text-muted-foreground animate-fade-in">Tourist ID: IND-2024-TAJ-7823 🇮🇳</p>
+        <p className="text-sm text-muted-foreground max-w-md mx-auto animate-fade-in">
+          {isTranslating ? "..." : translatedContent.welcomeSubtitle}
+        </p>
         <div className="flex items-center justify-center gap-2 animate-fade-in">
           <Badge variant="outline" className="bg-gradient-safe border-0 text-safe-foreground">
             {t("tourist.digitalId")} ✓
@@ -105,7 +128,9 @@ export const TouristDashboard = () => {
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-emergency">{t("tourist.emergency")}</h3>
-            <p className="text-sm text-muted-foreground">{t("tourist.emergencyDesc")}</p>
+            <p className="text-sm text-muted-foreground">
+              {isTranslating ? "..." : translatedContent.emergencyDescription}
+            </p>
             {!isOnline && (
               <Button 
                 variant="outline" 
@@ -113,7 +138,7 @@ export const TouristDashboard = () => {
                 onClick={simulateOfflineAlert}
                 className="mt-2"
               >
-                Test Offline Alert
+                {isTranslating ? "..." : translatedContent.offlineTestButton}
               </Button>
             )}
           </div>
@@ -134,7 +159,9 @@ export const TouristDashboard = () => {
         {sosActive && (
           <div className="mt-4 p-3 bg-emergency/20 rounded-lg">
             <p className="text-emergency font-medium">🚨 {t("sos.notified")}</p>
-            <p className="text-sm text-emergency/80">{t("sos.stayCalm")}</p>
+            <p className="text-sm text-emergency/80">
+              {isTranslating ? "..." : translatedContent.stayCalm}
+            </p>
           </div>
         )}
       </Card>
@@ -182,19 +209,27 @@ export const TouristDashboard = () => {
         <div className="flex items-start gap-3">
           <MapPin className="h-5 w-5 text-primary mt-1" />
           <div className="flex-1">
-            <h3 className="font-semibold text-primary mb-2">{t("tourist.smartGuidance")}</h3>
+            <h3 className="font-semibold text-primary mb-2">
+              {isTranslating ? "..." : translatedContent.smartGuidanceTitle}
+            </h3>
             <div className="space-y-2">
               <div className="flex items-center gap-2 animate-slide-in">
                 <Badge variant="safe" size="sm">{t("tourist.recommendation")}</Badge>
-                <span className="text-sm">Visit Taj Mahal gardens - Safe tourist route</span>
+                <span className="text-sm">
+                  {isTranslating ? "..." : translatedContent.recommendation}
+                </span>
               </div>
               <div className="flex items-center gap-2 animate-slide-in">
                 <Badge variant="caution" size="sm">{t("tourist.headsUp")}</Badge>
-                <span className="text-sm">Heavy tourist traffic near main entrance</span>
+                <span className="text-sm">
+                  {isTranslating ? "..." : translatedContent.headsUpMessage}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Updated 2 minutes ago</span>
+                <span className="text-sm text-muted-foreground">
+                  {isTranslating ? "..." : translatedContent.lastUpdated}
+                </span>
               </div>
             </div>
           </div>
@@ -207,7 +242,9 @@ export const TouristDashboard = () => {
           <div className="text-center">
             <QrCode className="h-8 w-8 mx-auto mb-2 text-primary group-hover:scale-110 transition-transform" />
             <h4 className="font-medium">{t("tourist.digitalIdAction")}</h4>
-            <p className="text-xs text-muted-foreground">Show Digital ID</p>
+            <p className="text-xs text-muted-foreground">
+              {isTranslating ? "..." : translatedContent.digitalIdDesc}
+            </p>
           </div>
         </Card>
         
@@ -215,7 +252,9 @@ export const TouristDashboard = () => {
           <div className="text-center">
             <MapPin className="h-8 w-8 mx-auto mb-2 text-safe group-hover:scale-110 transition-transform" />
             <h4 className="font-medium">{t("tourist.safeRoutes")}</h4>
-            <p className="text-xs text-muted-foreground">Find safe paths</p>
+            <p className="text-xs text-muted-foreground">
+              {isTranslating ? "..." : translatedContent.safeRoutesDesc}
+            </p>
           </div>
         </Card>
         
@@ -223,7 +262,9 @@ export const TouristDashboard = () => {
           <div className="text-center">
             <Users className="h-8 w-8 mx-auto mb-2 text-caution group-hover:scale-110 transition-transform" />
             <h4 className="font-medium">{t("tourist.emergencyContacts")}</h4>
-            <p className="text-xs text-muted-foreground">Police: 100, Hospital: 108</p>
+            <p className="text-xs text-muted-foreground">
+              {isTranslating ? "..." : translatedContent.emergencyContactsDesc}
+            </p>
           </div>
         </Card>
         
@@ -231,7 +272,9 @@ export const TouristDashboard = () => {
           <div className="text-center">
             <AlertTriangle className="h-8 w-8 mx-auto mb-2 text-restricted group-hover:scale-110 transition-transform" />
             <h4 className="font-medium">{t("tourist.reportIssue")}</h4>
-            <p className="text-xs text-muted-foreground">Blockchain verified</p>
+            <p className="text-xs text-muted-foreground">
+              {isTranslating ? "..." : translatedContent.reportIssueDesc}
+            </p>
           </div>
         </Card>
       </div>
