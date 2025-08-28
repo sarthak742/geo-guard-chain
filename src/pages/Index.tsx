@@ -139,12 +139,6 @@ const Index = () => {
             
             <div className="flex items-center gap-2 ml-4">
               <LanguageSwitcher />
-              <Link to="/authority">
-                <Button variant="outline" size="sm">
-                  <Scan className="h-4 w-4 mr-2" />
-                  Authority Portal
-                </Button>
-              </Link>
             </div>
           </div>
         </div>

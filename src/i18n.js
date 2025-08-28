@@ -18,8 +18,7 @@ const resources = {
         dashboard: "Dashboard",
         map: "Map",
         incidents: "Incidents", 
-        admin: "Admin",
-        authority: "Authority Portal"
+        admin: "Admin"
       },
       
       // Tourist Dashboard
@@ -61,20 +60,6 @@ const resources = {
         minutes: "minutes",
         viewDetails: "View Details",
         noAlerts: "No alerts at this time"
-      },
-      
-      // Authority
-      authority: {
-        title: "Authority Portal", 
-        scanner: "QR Scanner",
-        scanTouristId: "Scan Tourist ID",
-        startScanning: "Start Scanning",
-        stopScanning: "Stop Scanning",
-        scanResult: "Scan Result",
-        validId: "Valid Tourist ID",
-        invalidId: "Invalid Tourist ID",
-        expired: "Expired",
-        verified: "Verified"
       },
       
       // Admin
@@ -142,8 +127,7 @@ const resources = {
         dashboard: "डैशबोर्ड",
         map: "नक्शा",
         incidents: "घटनाएं",
-        admin: "एडमिन",
-        authority: "प्राधिकरण पोर्टल"
+        admin: "एडमिन"
       },
       
       // Tourist Dashboard
@@ -185,20 +169,6 @@ const resources = {
         minutes: "मिनट",
         viewDetails: "विवरण देखें",
         noAlerts: "इस समय कोई अलर्ट नहीं"
-      },
-      
-      // Authority
-      authority: {
-        title: "प्राधिकरण पोर्टल",
-        scanner: "क्यूआर स्कैनर",
-        scanTouristId: "पर्यटक आईडी स्कैन करें",
-        startScanning: "स्कैनिंग शुरू करें",
-        stopScanning: "स्कैनिंग बंद करें",
-        scanResult: "स्कैन परिणाम",
-        validId: "वैध पर्यटक आईडी",
-        invalidId: "अवैध पर्यटक आईडी",
-        expired: "समाप्त",
-        verified: "सत्यापित"
       },
       
       // Admin
