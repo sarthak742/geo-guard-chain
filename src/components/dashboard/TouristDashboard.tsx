@@ -5,10 +5,15 @@ import { Badge } from "@/components/ui/badge";
 import { RiskGauge } from "@/components/safety/RiskGauge";
 import { MeghalayaMap } from "@/components/maps/MeghalayaMap";
 import { IncidentReporter } from "@/components/incidents/IncidentReporter";
+import { DigitalIDCard } from "@/components/tourist/DigitalIDCard";
+import { VoiceSOS } from "@/components/tourist/VoiceSOS";
+import { AnomalyAlertsPanel } from "@/components/alerts/AnomalyAlertsPanel";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useOfflineMode } from "@/hooks/useOfflineMode";
 import { AlertTriangle, Phone, MapPin, Clock, QrCode, Users, Wifi, WifiOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { anomalyDetectionService } from "@/services/anomalyDetection";
 
 export const TouristDashboard = () => {
   const [currentRisk] = useState(25);
@@ -18,8 +23,31 @@ export const TouristDashboard = () => {
   const { toast } = useToast();
   const { t } = useLanguage();
   const { isOnline, simulateOfflineAlert } = useOfflineMode();
+  const { user } = useAuth();
 
-  const handleSOS = () => {
+  // Set up anomaly detection with mock planned zones
+  useState(() => {
+    if (user) {
+      anomalyDetectionService.setPlannedItinerary(user.id, [
+        {
+          id: 'shillong-zone',
+          name: 'Shillong Tourist Zone',
+          center: { latitude: 25.5788, longitude: 91.8933 },
+          radius: 5000, // 5km radius
+          type: 'planned'
+        },
+        {
+          id: 'cherrapunji-zone', 
+          name: 'Cherrapunji Tourist Zone',
+          center: { latitude: 25.2633, longitude: 91.7098 },
+          radius: 3000, // 3km radius
+          type: 'planned'
+        }
+      ]);
+    }
+  });
+
+  const handleSOS = (message: string, audioBlob?: Blob) => {
     setSosActive(true);
     setLocationPulse(true);
     
@@ -29,23 +57,28 @@ export const TouristDashboard = () => {
     
     toast({
       title: `🚨 ${t("sos.activated")}`,
-      description: t("sos.help"),
+      description: message.length > 50 ? message.slice(0, 50) + "..." : message,
       variant: "destructive"
     });
 
-    // Simulate admin notification
+    // Simulate admin notification with voice message
     setTimeout(() => {
       toast({
         title: "📡 Admin Notified", 
-        description: `Hash: ${blockchainHash} | Time: ${timestamp}`,
+        description: `Voice Message Received | Hash: ${blockchainHash}`,
       });
     }, 1000);
     
-    // Reset after 5 seconds for demo
+    // Reset after 8 seconds for demo
     setTimeout(() => {
       setSosActive(false);
       setLocationPulse(false);
-    }, 5000);
+    }, 8000);
+  };
+
+  const handleTraditionalSOS = () => {
+    const defaultMessage = t("tourist.emergency");
+    handleSOS(defaultMessage);
   };
 
   return (
@@ -87,7 +120,7 @@ export const TouristDashboard = () => {
           <Button
             variant="emergency"
             size="lg"
-            onClick={handleSOS}
+            onClick={handleTraditionalSOS}
             disabled={sosActive}
             className={`h-16 w-16 rounded-full ${locationPulse ? 'animate-pulse' : ''}`}
           >
@@ -106,15 +139,24 @@ export const TouristDashboard = () => {
         )}
       </Card>
 
-      {/* Main Grid */}
+      {/* Enhanced Features Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Risk Assessment */}
-        <div className="lg:col-span-1">
+        {/* Digital ID & Voice SOS */}
+        <div className="lg:col-span-1 space-y-6">
+          {/* Digital ID Card */}
+          {user && (
+            <DigitalIDCard userId={user.id} />
+          )}
+          
+          {/* Voice SOS */}
+          <VoiceSOS onSOSActivated={handleSOS} />
+          
+          {/* Risk Assessment */}
           <RiskGauge score={currentRisk} factors={riskFactors} />
         </div>
 
         {/* AI-Powered Meghalaya Map */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 space-y-6">
           <Card className="p-4">
             <div className="flex items-center gap-2 mb-4">
               <MapPin className="h-5 w-5 text-primary" />
@@ -127,6 +169,11 @@ export const TouristDashboard = () => {
               className={locationPulse ? 'animate-pulse' : ''}
             />
           </Card>
+
+          {/* Anomaly Alerts for Tourist */}
+          {user && (
+            <AnomalyAlertsPanel touristId={user.id} />
+          )}
         </div>
       </div>
 

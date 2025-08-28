@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { TouristDashboard } from "@/components/dashboard/TouristDashboard";
 import { AdminConsole } from "@/components/admin/AdminConsole";
@@ -6,12 +7,13 @@ import { DemoSimulator } from "@/components/demo/DemoSimulator";
 import { LiveDemoSimulator } from "@/components/demo/LiveDemoSimulator";
 import { TouristLiveDemo } from "@/components/demo/TouristLiveDemo";
 import { TechDemo } from "@/components/demo/TechDemo";
+import { LanguageToggle } from "@/components/ui/language-toggle";
 
 import { SimplifiedExplanations } from "@/components/explanation/SimplifiedExplanations";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Users, Settings, Play, BookOpen, TrendingUp, Code2, Monitor } from "lucide-react";
+import { Shield, Users, Settings, Play, BookOpen, TrendingUp, Code2, Monitor, Scan } from "lucide-react";
 
 const Index = () => {
   const [activeMode, setActiveMode] = useState<"tourist" | "admin" | "tourist-demo" | "tech-demo" | "explanation">("tourist-demo");
@@ -108,22 +110,34 @@ const Index = () => {
       {/* Mode Selector */}
       <div className="border-b bg-background/95 backdrop-blur-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex justify-center gap-2 flex-wrap">
-            {modes.map((mode) => (
-              <Button
-                key={mode.id}
-                variant={activeMode === mode.id ? mode.color : "outline"}
-                onClick={() => setActiveMode(mode.id)}
-                className="flex items-center gap-2 min-w-fit"
-                size={mode.id === "tourist-demo" || mode.id === "tech-demo" ? "lg" : "default"}
-              >
-                <mode.icon className="h-4 w-4" />
-                <div className="text-left">
-                  <div className="font-medium text-sm">{mode.title}</div>
-                  <div className="text-xs opacity-80 hidden sm:block">{mode.description}</div>
-                </div>
-              </Button>
-            ))}
+          <div className="flex justify-between items-center">
+            <div className="flex justify-center gap-2 flex-wrap flex-1">
+              {modes.map((mode) => (
+                <Button
+                  key={mode.id}
+                  variant={activeMode === mode.id ? mode.color : "outline"}
+                  onClick={() => setActiveMode(mode.id)}
+                  className="flex items-center gap-2 min-w-fit"
+                  size={mode.id === "tourist-demo" || mode.id === "tech-demo" ? "lg" : "default"}
+                >
+                  <mode.icon className="h-4 w-4" />
+                  <div className="text-left">
+                    <div className="font-medium text-sm">{mode.title}</div>
+                    <div className="text-xs opacity-80 hidden sm:block">{mode.description}</div>
+                  </div>
+                </Button>
+              ))}
+            </div>
+            
+            <div className="flex items-center gap-2 ml-4">
+              <LanguageToggle />
+              <Link to="/authority">
+                <Button variant="outline" size="sm">
+                  <Scan className="h-4 w-4 mr-2" />
+                  Authority Portal
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

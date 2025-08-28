@@ -65,6 +65,49 @@ const translations = {
     "incident.submitted": "Incident Reported",
     "incident.hash": "Blockchain hash",
     
+    // Digital ID & Blockchain
+    "digitalId.title": "Digital Tourist ID",
+    "digitalId.valid": "Valid ID",
+    "digitalId.expired": "Expired ID", 
+    "digitalId.showQR": "Show QR Code",
+    "digitalId.download": "Download",
+    "digitalId.generated": "Digital ID Generated",
+    "digitalId.verified": "Blockchain Verified",
+    
+    // Voice SOS
+    "voiceSos.title": "Voice SOS System",
+    "voiceSos.recording": "Recording...",
+    "voiceSos.transcription": "Live Transcription",
+    "voiceSos.startRecording": "Voice SOS",
+    "voiceSos.stopRecording": "Stop & Send SOS",
+    "voiceSos.quickSos": "Quick SOS",
+    "voiceSos.processing": "Processing speech...",
+    "voiceSos.speakLanguage": "Speak in Hindi or English",
+    "voiceSos.clearlyDescribe": "Clearly describe your emergency",
+    "voiceSos.bothSent": "Both audio and text will be sent",
+    
+    // Authority Scanner
+    "authority.title": "Authority ID Scanner",
+    "authority.startScan": "Start Camera Scan",
+    "authority.uploadImage": "Upload Image",
+    "authority.scannerActive": "Scanner Active",
+    "authority.alignQR": "Align QR code within frame",
+    "authority.validId": "VALID TOURIST ID", 
+    "authority.invalidId": "INVALID ID",
+    "authority.scanAnother": "Scan Another",
+    "authority.callEmergency": "Call Emergency",
+    
+    // Anomaly Alerts
+    "anomaly.title": "Anomaly Detection",
+    "anomaly.activeAlerts": "Active Anomaly Alerts",
+    "anomaly.noAnomalies": "No Active Anomalies",
+    "anomaly.allSafe": "All tourists are within safe parameters",
+    "anomaly.handledAlerts": "Handled Alerts",
+    "anomaly.acknowledge": "Acknowledge",
+    "anomaly.inactivity": "Inactivity Alert",
+    "anomaly.geofence": "Geofence Violation",
+    "anomaly.movement": "Unusual Movement",
+    
     // Common
     "common.view": "View",
     "common.dispatch": "Dispatch", 
@@ -131,6 +174,49 @@ const translations = {
     "incident.submit": "रिपोर्ट सबमिट करें",
     "incident.submitted": "घटना रिपोर्ट की गई",
     "incident.hash": "ब्लॉकचेन हैश",
+    
+    // Digital ID & Blockchain
+    "digitalId.title": "डिजिटल टूरिस्ट आईडी",
+    "digitalId.valid": "वैध आईडी",
+    "digitalId.expired": "समाप्त आईडी",
+    "digitalId.showQR": "QR कोड दिखाएं",
+    "digitalId.download": "डाउनलोड",
+    "digitalId.generated": "डिजिटल आईडी जेनरेट हुई",
+    "digitalId.verified": "ब्लॉकचेन सत्यापित",
+    
+    // Voice SOS
+    "voiceSos.title": "वॉइस SOS सिस्टम",
+    "voiceSos.recording": "रिकॉर्डिंग...",
+    "voiceSos.transcription": "लाइव ट्रांसक्रिप्शन",
+    "voiceSos.startRecording": "वॉइस SOS",
+    "voiceSos.stopRecording": "रुकें और SOS भेजें",
+    "voiceSos.quickSos": "त्वरित SOS",
+    "voiceSos.processing": "भाषण प्रसंस्करण...",
+    "voiceSos.speakLanguage": "हिंदी या अंग्रेजी में बोलें",
+    "voiceSos.clearlyDescribe": "स्पष्ट रूप से अपनी आपातकालीन स्थिति बताएं",
+    "voiceSos.bothSent": "ऑडियो और टेक्स्ट दोनों भेजे जाएंगे",
+    
+    // Authority Scanner
+    "authority.title": "अधिकारी आईडी स्कैनर",
+    "authority.startScan": "कैमरा स्कैन शुरू करें",
+    "authority.uploadImage": "छवि अपलोड करें",
+    "authority.scannerActive": "स्कैनर सक्रिय",
+    "authority.alignQR": "फ्रेम में QR कोड संरेखित करें",
+    "authority.validId": "वैध टूरिस्ट आईडी",
+    "authority.invalidId": "अवैध आईडी",
+    "authority.scanAnother": "दूसरा स्कैन करें",
+    "authority.callEmergency": "आपातकाल कॉल करें",
+    
+    // Anomaly Alerts
+    "anomaly.title": "असामान्यता पहचान",
+    "anomaly.activeAlerts": "सक्रिय असामान्यता अलर्ट",
+    "anomaly.noAnomalies": "कोई सक्रिय असामान्यता नहीं",
+    "anomaly.allSafe": "सभी पर्यटक सुरक्षित पैरामीटर में हैं",
+    "anomaly.handledAlerts": "संभाले गए अलर्ट",
+    "anomaly.acknowledge": "स्वीकार करें",
+    "anomaly.inactivity": "निष्क्रियता अलर्ट",
+    "anomaly.geofence": "भू-बाड़ उल्लंघन",
+    "anomaly.movement": "असामान्य गति",
     
     // Common
     "common.view": "देखें",
