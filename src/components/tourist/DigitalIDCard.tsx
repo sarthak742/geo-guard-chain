@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { QrCode, Download, Shield, Calendar, MapPin, Phone } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslation } from "react-i18next";
 import { digitalIDService, type DigitalTouristID } from '@/services/digitalId';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
@@ -33,7 +33,7 @@ export const DigitalIDCard = ({ userId, className = "" }: DigitalIDCardProps) =>
   const [digitalId, setDigitalId] = useState<DigitalTouristID | null>(null);
   const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const { toast } = useToast();
 
   useEffect(() => {

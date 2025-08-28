@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { LanguageToggle } from "@/components/ui/language-toggle";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { useTranslation } from "react-i18next";
 import { Shield, MapPin, AlertTriangle, Settings, Home } from "lucide-react";
 
 export const Navigation = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   const navItems = [
     { id: "dashboard", icon: Home, label: t("nav.dashboard") },
@@ -30,7 +30,7 @@ export const Navigation = () => {
         </div>
         
         <div className="flex items-center gap-2">
-          <LanguageToggle />
+          <LanguageSwitcher />
           <nav className="flex gap-1">
           {navItems.map((item) => (
             <Button

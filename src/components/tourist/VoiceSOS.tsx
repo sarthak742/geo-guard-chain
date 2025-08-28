@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Mic, MicOff, Phone, Volume2 } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslation } from "react-i18next";
 import { useToast } from '@/hooks/use-toast';
 
 interface VoiceSOSProps {
@@ -16,7 +16,7 @@ export const VoiceSOS = ({ onSOSActivated, className = "" }: VoiceSOSProps) => {
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [transcription, setTranscription] = useState("");
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
-  const { t, language } = useLanguage();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -48,7 +48,7 @@ export const VoiceSOS = ({ onSOSActivated, className = "" }: VoiceSOSProps) => {
         
         recognitionRef.current.continuous = true;
         recognitionRef.current.interimResults = true;
-        recognitionRef.current.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
+        recognitionRef.current.lang = i18n.language === 'hi' ? 'hi-IN' : 'en-IN';
 
         recognitionRef.current.onresult = (event: any) => {
           let finalTranscript = '';
@@ -84,7 +84,7 @@ export const VoiceSOS = ({ onSOSActivated, className = "" }: VoiceSOSProps) => {
 
       toast({
         title: "🎤 Recording Started",
-        description: language === 'hi' ? "हिंदी या अंग्रेजी में बोलें" : "Speak in Hindi or English",
+        description: i18n.language === 'hi' ? "हिंदी या अंग्रेजी में बोलें" : "Speak in Hindi or English",
       });
 
     } catch (error) {
@@ -122,7 +122,7 @@ export const VoiceSOS = ({ onSOSActivated, className = "" }: VoiceSOSProps) => {
         });
       } else {
         // Fallback to default emergency message
-        const defaultMessage = language === 'hi' 
+        const defaultMessage = i18n.language === 'hi' 
           ? "आपातकालीन सहायता चाहिए" 
           : "Emergency assistance needed";
         onSOSActivated(defaultMessage, audioBlob);
@@ -137,7 +137,7 @@ export const VoiceSOS = ({ onSOSActivated, className = "" }: VoiceSOSProps) => {
   };
 
   const quickSOS = () => {
-    const quickMessage = language === 'hi' 
+    const quickMessage = i18n.language === 'hi' 
       ? "तत्काल मदद चाहिए! आपातकाल!"
       : "Need immediate help! Emergency!";
     
@@ -167,7 +167,7 @@ export const VoiceSOS = ({ onSOSActivated, className = "" }: VoiceSOSProps) => {
               <span className="text-emergency font-medium">Recording...</span>
             </div>
             <Badge variant="outline" className="ml-auto">
-              {language === 'hi' ? 'हिंदी/English' : 'Hindi/English'}
+              {i18n.language === 'hi' ? 'हिंदी/English' : 'Hindi/English'}
             </Badge>
           </div>
         )}
@@ -223,9 +223,9 @@ export const VoiceSOS = ({ onSOSActivated, className = "" }: VoiceSOSProps) => {
 
         {/* Instructions */}
         <div className="text-xs text-muted-foreground space-y-1">
-          <p>• {language === 'hi' ? 'हिंदी या अंग्रेजी में बोलें' : 'Speak in Hindi or English'}</p>
-          <p>• {language === 'hi' ? 'स्पष्ट रूप से अपनी समस्या बताएं' : 'Clearly describe your emergency'}</p>
-          <p>• {language === 'hi' ? 'ऑडियो और टेक्स्ट दोनों भेजे जाएंगे' : 'Both audio and text will be sent'}</p>
+          <p>• {i18n.language === 'hi' ? 'हिंदी या अंग्रेजी में बोलें' : 'Speak in Hindi or English'}</p>
+          <p>• {i18n.language === 'hi' ? 'स्पष्ट रूप से अपनी समस्या बताएं' : 'Clearly describe your emergency'}</p>
+          <p>• {i18n.language === 'hi' ? 'ऑडियो और टेक्स्ट दोनों भेजे जाएंगे' : 'Both audio and text will be sent'}</p>
         </div>
       </CardContent>
     </Card>

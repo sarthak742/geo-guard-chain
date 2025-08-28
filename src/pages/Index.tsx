@@ -7,7 +7,8 @@ import { DemoSimulator } from "@/components/demo/DemoSimulator";
 import { LiveDemoSimulator } from "@/components/demo/LiveDemoSimulator";
 import { TouristLiveDemo } from "@/components/demo/TouristLiveDemo";
 import { TechDemo } from "@/components/demo/TechDemo";
-import { LanguageToggle } from "@/components/ui/language-toggle";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { useTranslation } from "react-i18next";
 
 import { SimplifiedExplanations } from "@/components/explanation/SimplifiedExplanations";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ import { Shield, Users, Settings, Play, BookOpen, TrendingUp, Code2, Monitor, Sc
 
 const Index = () => {
   const [activeMode, setActiveMode] = useState<"tourist" | "admin" | "tourist-demo" | "tech-demo" | "explanation">("tourist-demo");
+  const { t } = useTranslation();
 
   const modes = [
     {
@@ -83,9 +85,15 @@ const Index = () => {
               <Shield className="h-12 w-12" />
             </div>
             <div className="text-left">
-              <h1 className="text-4xl font-bold animate-fade-in">Geo-Safe-Chain</h1>
-              <p className="text-lg opacity-90 animate-fade-in">AI-Powered Tourist Safety Platform</p>
+              <h1 className="text-4xl font-bold animate-fade-in">{t('app.title')}</h1>
+              <p className="text-lg opacity-90 animate-fade-in">{t('app.subtitle')}</p>
             </div>
+          </div>
+          
+          {/* Prominent multilingual welcome message */}
+          <div className="mb-6 text-center">
+            <h2 className="text-2xl font-semibold mb-2">{t('app.welcome')}</h2>
+            <p className="text-lg opacity-90">{t('app.description')}</p>
           </div>
           
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
@@ -130,7 +138,7 @@ const Index = () => {
             </div>
             
             <div className="flex items-center gap-2 ml-4">
-              <LanguageToggle />
+              <LanguageSwitcher />
               <Link to="/authority">
                 <Button variant="outline" size="sm">
                   <Scan className="h-4 w-4 mr-2" />

@@ -8,7 +8,7 @@ import { IncidentReporter } from "@/components/incidents/IncidentReporter";
 import { DigitalIDCard } from "@/components/tourist/DigitalIDCard";
 import { VoiceSOS } from "@/components/tourist/VoiceSOS";
 import { AnomalyAlertsPanel } from "@/components/alerts/AnomalyAlertsPanel";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslation } from "react-i18next";
 import { useOfflineMode } from "@/hooks/useOfflineMode";
 import { AlertTriangle, Phone, MapPin, Clock, QrCode, Users, Wifi, WifiOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -21,7 +21,7 @@ export const TouristDashboard = () => {
   const [sosActive, setSosActive] = useState(false);
   const [locationPulse, setLocationPulse] = useState(false);
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const { isOnline, simulateOfflineAlert } = useOfflineMode();
   const { user } = useAuth();
 

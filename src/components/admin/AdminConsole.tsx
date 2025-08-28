@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnalyticsDashboard } from "./AnalyticsDashboard";
 import { FutureIntegrations } from "./FutureIntegrations";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslation } from "react-i18next";
 import { Users, AlertTriangle, MapPin, Activity, Clock, CheckCircle, Eye, BarChart3, Zap } from "lucide-react";
 
 interface Incident {
@@ -73,7 +73,7 @@ const mockIncidents: Incident[] = [
 ];
 
 export const AdminConsole = () => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   
   const getStatusColor = (status: string) => {
     switch (status) {
