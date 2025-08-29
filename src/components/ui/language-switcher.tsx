@@ -1,21 +1,18 @@
-import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Languages } from "lucide-react";
 import { toast } from "sonner";
-import { translateText } from "@/utils/translateText";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const languages = [
   { code: "en", name: "English", native: "English" },
   { code: "hi", name: "Hindi", native: "हिंदी" },
-  { code: "bn", name: "Bengali", native: "বাংলা" },
-  { code: "mr", name: "Marathi", native: "मराठी" },
-  { code: "te", name: "Telugu", native: "తెలుగు" },
   { code: "ta", name: "Tamil", native: "தமிழ்" },
+  { code: "te", name: "Telugu", native: "తెలుగు" },
+  { code: "mr", name: "Marathi", native: "मराठी" },
   { code: "gu", name: "Gujarati", native: "ગુજરાતી" },
-  { code: "ur", name: "Urdu", native: "اردو" },
   { code: "kn", name: "Kannada", native: "ಕನ್ನಡ" },
+  { code: "bn", name: "Bengali", native: "বাংলা" },
   { code: "or", name: "Odia", native: "ଓଡ଼ିଆ" },
   { code: "pa", name: "Punjabi", native: "ਪੰਜਾਬੀ" },
 ];
@@ -36,11 +33,7 @@ export const LanguageSwitcher = () => {
       window.dispatchEvent(event);
       
       const selectedLang = languages.find(l => l.code === lng);
-      const successMessage = lng === 'en' 
-        ? 'Language switched to English' 
-        : await translateText('Language switched successfully', lng);
-      
-      toast.success(successMessage);
+      toast.success(t('messages.languageChanged'));
     } catch (error) {
       console.error('Language change error:', error);
       toast.error('Failed to change language');

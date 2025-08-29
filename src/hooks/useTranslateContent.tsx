@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translateText } from '@/utils/translateText';
 
 interface TranslatableContent {
   [key: string]: string;
@@ -12,17 +11,8 @@ export const useTranslateContent = (originalContent: TranslatableContent) => {
   const [isTranslating, setIsTranslating] = useState(false);
 
   const translateContentRecursive = useCallback(async (content: TranslatableContent, targetLang: string): Promise<TranslatableContent> => {
-    const translated: TranslatableContent = {};
-    
-    for (const key in content) {
-      if (typeof content[key] === 'string') {
-        translated[key] = await translateText(content[key] as string, targetLang);
-      } else {
-        translated[key] = content[key];
-      }
-    }
-    
-    return translated;
+    // Static translations only - return original content
+    return content;
   }, []);
 
   const translateContent = useCallback(async (targetLang: string) => {

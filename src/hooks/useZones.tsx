@@ -33,8 +33,8 @@ export const useZones = () => {
       setLoading(true);
       // Security: Only select fields needed for public display, exclude user_id
       const { data, error } = await supabase
-        .from('zones')
-        .select('id, latitude, longitude, zone_type, description, blockchain_tx_hash, created_at, updated_at')
+        .from('geofences')
+        .select('id, name, geometry, created_at, updated_at')
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -42,7 +42,19 @@ export const useZones = () => {
         return;
       }
 
-      setZones((data as Zone[]) || []);
+      // Transform geofences data to match Zone interface
+      const transformedData = (data || []).map(item => ({
+        id: item.id,
+        latitude: 0, // Default values since geofences use geometry
+        longitude: 0,
+        zone_type: 'safe' as const,
+        description: item.name,
+        blockchain_tx_hash: null,
+        created_at: item.created_at,
+        updated_at: item.updated_at
+      }));
+
+      setZones(transformedData);
     } catch (error) {
       console.error('Error fetching zones:', error);
     } finally {
